@@ -38,7 +38,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //
+        /
 
         telemetry.addData("Status", "¡Listo para la Copa Ka'i!");
         telemetry.update();
