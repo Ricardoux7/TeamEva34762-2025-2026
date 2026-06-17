@@ -32,9 +32,9 @@ public class autonomoAz1 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        leftDrive = hardwareMap.get(DcMotor.class, "mI");
-        rightDrive = hardwareMap.get(DcMotor.class, "mD");
-        shootMotor = hardwareMap.get(DcMotor.class, "mC");
+        leftDrive = hardwareMap.get(DcMotor.class, "mi");
+        rightDrive = hardwareMap.get(DcMotor.class, "md");
+        shootMotor = hardwareMap.get(DcMotor.class, "mc");
         servoShooter1 = hardwareMap.get(CRServo.class, "s1");
         servoShooter2 = hardwareMap.get(CRServo.class, "s2");
 

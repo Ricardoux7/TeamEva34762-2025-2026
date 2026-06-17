@@ -15,6 +15,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
     private CRServo servoShooter1 = null;
     private CRServo servoShooter2 = null;
     private DcMotor shooterMotor = null;
+    private DcMotor intakeMotor = null;
 
     @Override
     public void runOpMode() {
@@ -25,6 +26,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
         leftFront = hardwareMap.get(DcMotor.class, "mi");
         rightFront = hardwareMap.get(DcMotor.class, "md");
         shooterMotor = hardwareMap.get(DcMotor.class, "mc");
+        intakeMotor = hardwareMap.get(DcMotor.class, "mr");
         servoShooter1 = hardwareMap.get(CRServo.class, "s1");
         servoShooter2 = hardwareMap.get(CRServo.class, "s2");
 
@@ -79,7 +81,13 @@ public class BasicOpMode_Linear extends LinearOpMode {
                 shooterMotor.setPower(0.0);
             }
 
-            // TELEMETRÍA
+            if (gamepad1.left_trigger > 0.1){
+                intakeMotor.setPower(gamepad1.left_trigger);
+            } else{
+                intakeMotor.setPower(0);
+            }
+
+            // TELEMETRÍA x
             telemetry.addData("Status", "Corriendo");
             telemetry.addData("Servos", "A: %s", (gamepad1.a ? "GIRANDO" : "PARADO"));
             telemetry.addData("Shooter Power", shooterMotor.getPower());

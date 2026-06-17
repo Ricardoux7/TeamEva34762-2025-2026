@@ -24,10 +24,10 @@ public class autonomoRj2 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        leftDrive = hardwareMap.get(DcMotor.class, "mI");
-        rightDrive = hardwareMap.get(DcMotor.class, "mD");
-        shootMotor = hardwareMap.get(DcMotor.class, "mS");
-        intakeMotor = hardwareMap.get(DcMotor.class, "mR");
+        leftDrive = hardwareMap.get(DcMotor.class, "mi");
+        rightDrive = hardwareMap.get(DcMotor.class, "md");
+        shootMotor = hardwareMap.get(DcMotor.class, "ms");
+        intakeMotor = hardwareMap.get(DcMotor.class, "mr");
         servoShooter1 = hardwareMap.get(CRServo.class, "s1");
         servoShooter2 = hardwareMap.get(CRServo.class, "s2");
 
@@ -61,7 +61,7 @@ public class autonomoRj2 extends LinearOpMode {
             servoShooter1.setPower(0.0);
             servoShooter2.setPower(0.0);
             shootMotor.setPower(0.0);
-            //aqui se desactiva el intake
+            //aqui se desactiva el intake  /
             sleep(200);
 
             leftDrive.setPower(1.0);
