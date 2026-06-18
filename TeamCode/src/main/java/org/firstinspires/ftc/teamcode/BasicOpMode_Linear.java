@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp(name = "TeleOp_Decode_Kai", group = "Linear Opmode")
 public class BasicOpMode_Linear extends LinearOpMode {
 
-    // DECLARACION DE VARIABLES
+    // variabkrs
     private DcMotor leftFront = null;
     private DcMotor rightFront = null;
     private CRServo servoShooter1 = null;
@@ -22,7 +22,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
         telemetry.addData("Status", "Inicializando Robot...");
         telemetry.update();
 
-        // MAPEEO DEL HARDWARE/
+        //mapeo
         leftFront = hardwareMap.get(DcMotor.class, "mi");
         rightFront = hardwareMap.get(DcMotor.class, "md");
         shooterMotor = hardwareMap.get(DcMotor.class, "mc");
@@ -30,11 +30,11 @@ public class BasicOpMode_Linear extends LinearOpMode {
         servoShooter1 = hardwareMap.get(CRServo.class, "s1");
         servoShooter2 = hardwareMap.get(CRServo.class, "s2");
 
-        // CONFIGURACIÓN DE DIRECCIONES
+        // confg direcciones
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        // CONFIGURACIÓN DE FRENO
+        // confg freno
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -45,13 +45,9 @@ public class BasicOpMode_Linear extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-
-            // ==========================================
-            // CONTROLADOR 1: CHASIS
-            // ==========================================
             double y = -gamepad1.left_stick_y; // Avance
             double x = gamepad1.left_stick_x * 0.5; // Desplazamiento
-            double rx = gamepad1.right_stick_x; // Rotación
+            double rx = gamepad1.right_stick_x; // Rotación en su propio eje
 
             // Normalización de potencia
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1.0);
@@ -63,15 +59,12 @@ public class BasicOpMode_Linear extends LinearOpMode {
             leftFront.setPower(frontLeftPower * multiplier);
             rightFront.setPower(frontRightPower * multiplier);
 
-            // ==========================================
-            // CONTROL DE SERVOS (GIRO INFINITO)
-            // ==========================================
-            // Giran mientras mantengas presionado A, se detienen al soltarlo
+            //servos
             if (gamepad1.a) {
-                servoShooter1.setPower(1.0);  // Máxima potencia adelante
-                servoShooter2.setPower(-1.0); // Sentido opuesto si están enfrentados
+                servoShooter1.setPower(1.0);
+                servoShooter2.setPower(-1.0);
             } else {
-                servoShooter1.setPower(0.0);  // Se detiene y queda fijo
+                servoShooter1.setPower(0.0);
                 servoShooter2.setPower(0.0);
             }
 
@@ -88,7 +81,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
                 intakeMotor.setPower(0);
             }
 
-            // TELEMETRÍA x
+            // telemetria
             telemetry.addData("Status", "Corriendo");
             telemetry.addData("Servos", "A: %s", (gamepad1.a ? "GIRANDO" : "PARADO"));
             telemetry.addData("Shooter Power", shooterMotor.getPower());
