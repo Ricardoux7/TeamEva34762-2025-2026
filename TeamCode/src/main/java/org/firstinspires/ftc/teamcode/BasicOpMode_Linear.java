@@ -1,5 +1,182 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+
+//Agradecimientos especiales
+// Kalena Lugo
+
+
+@TeleOp(name="Basic: Linear OpMode", group="Linear OpMode")
+//@Disabled
+public class BasicOpMode_Linear extends LinearOpMode {
+
+    DcMotor motorIzquierdo;
+    DcMotor motorDerecho;
+    DcMotor motorCanon;
+    DcMotor motorRecogida;
+    private CRServo servoShooter1/* = null*/;
+    private CRServo servoShooter2 /*= null*/;
+
+    double y, x;
+    boolean disparo, recogida;
+
+
+    double poderIzquierdo, poderDerecho;
+
+    @Override
+    public void runOpMode() {
+
+        motorIzquierdo = hardwareMap.get(DcMotor.class, "mi");
+        motorDerecho = hardwareMap.get(DcMotor.class, "md");
+        motorCanon = hardwareMap.get(DcMotor.class, "mc");
+        motorRecogida = hardwareMap.get(DcMotor.class, "mr");
+        servoShooter1 = hardwareMap.get(CRServo.class, "s1");
+        servoShooter2 = hardwareMap.get(CRServo.class, "s2");
+
+        motorIzquierdo.setDirection(DcMotor.Direction.REVERSE);
+        motorDerecho.setDirection(DcMotor.Direction.FORWARD);
+        motorCanon.setDirection(DcMotor.Direction.FORWARD);
+        motorRecogida.setDirection(DcMotor.Direction.FORWARD);
+        motorIzquierdo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorDerecho.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        waitForStart();
+
+        while (opModeIsActive()) {
+            y = -gamepad1.left_stick_y;
+            x = gamepad1.right_stick_x;
+            double multiplicador = gamepad1.left_bumper ? 0.3 : 1.0;
+            poderIzquierdo = Range.clip(y + x, -1.0, 1.0) * multiplicador;
+            poderDerecho = Range.clip(y - x, -1.0, 1.0) * multiplicador;
+
+            motorIzquierdo.setPower(poderIzquierdo);
+            motorDerecho.setPower(poderDerecho);
+
+            if(gamepad1.right_trigger > 0.3){
+                motorCanon.setPower(1.0);
+            } else{
+                motorCanon.setPower(0.0);
+            }
+
+            if (gamepad1.left_trigger > 0.25){
+
+                motorRecogida.setPower(1.0);
+            } else{
+                motorRecogida.setPower(0.0);
+            }
+
+            if (gamepad1.a){
+                servoShooter1.setPower(1.0);
+                servoShooter2.setPower(-1.0);
+            } else if(gamepad1.b){
+                servoShooter1.setPower(-1.0);
+                servoShooter2.setPower(1.0);
+            } else{
+                servoShooter1.setPower(0.0);
+                servoShooter2.setPower(0.0);
+            }
+        }
+    }
+}
+
+/*
+
+
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+
+//Agradecimientos especiales
+// Kalena Lugo
+
+
+@TeleOp(name="Basic: Linear OpMode", group="Linear OpMode")
+@Disabled
+public class BasicOpMode_Linear extends LinearOpMode {
+
+    DcMotor motorIzquierdo;
+    DcMotor motorDerecho;
+    DcMotor motorCanon;
+    DcMotor motorRecogida;
+
+    double movimiento, curva;
+    boolean disparo, recogida;
+
+
+    double poderIzquierdo, poderDerecho;
+
+    @Override
+    public void runOpMode() {
+
+        motorIzquierdo = hardwareMap.get(DcMotor.class, "mI");
+        motorDerecho = hardwareMap.get(DcMotor.class, "mD");
+        motorCanon = hardwareMap.get(DcMotor.class, "mC");
+        motorRecogida = hardwareMap.get(DcMotor.class, "mR");
+
+        motorIzquierdo.setDirection(DcMotor.Direction.REVERSE);
+        motorDerecho.setDirection(DcMotor.Direction.FORWARD);
+        motorCanon.setDirection(DcMotor.Direction.FORWARD);
+        motorRecogida.setDirection(DcMotor.Direction.FORWARD);
+
+
+
+        waitForStart();
+
+
+
+        while (opModeIsActive()) {
+
+            movimiento = -gamepad1.left_stick_y;
+            curva = gamepad1.right_stick_x;
+            disparo = gamepad1.left_trigger_pressed;
+            recogida = gamepad1.a;
+
+            poderIzquierdo = Range.clip(movimiento + curva, -1.0, 1.0) ;
+            poderDerecho = Range.clip(movimiento - curva, -1.0, 1.0) ;
+            if(disparo){
+
+
+                motorCanon.setPower(1.0);
+            }
+
+            if (recogida){
+
+                motorRecogida.setPower(1.0);
+            }
+
+
+
+
+            motorIzquierdo.setPower(poderIzquierdo);
+            motorDerecho.setPower(poderDerecho);
+
+        }
+    }
+}
+
+*/
+
+
+
+/*
+
+package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -89,3 +266,5 @@ public class BasicOpMode_Linear extends LinearOpMode {
         }
     }
 }
+
+*/
